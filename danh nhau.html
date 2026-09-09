@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Street Fight</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background: #222;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    h1 {
+        margin: 15px;
+    }
+
+    #game {
+        width: 900px;
+        max-width: 100%;
+        height: 500px;
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(#87ceeb 0%, #87ceeb 65%, #555 65%);
+        border: 4px solid white;
+    }
+
+    .fighter {
+        width: 80px;
+        height: 150px;
+        position: absolute;
+        bottom: 40px;
+        transition: 0.1s;
+    }
+
+    #player {
+        left: 150px;
+        background: #1976d2;
+    }
+
+    #enemy {
+        left: 650px;
+        background: #d32f2f;
+    }
+
+    .head {
+        width: 55px;
+        height: 55px;
+        background: #f0c090;
+        border-radius: 50%;
+        margin: auto;
+    }
+
+    .body {
+        width: 70px;
+        height: 95px;
+        margin: auto;
+        background: inherit;
+        border-radius: 10px 10px 0 0;
+    }
+
+    #ui {
+        width: 900px;
+        max-width: 100%;
+        margin: 10px auto;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .health-box {
+        width: 42%;
+    }
+
+    .health {
+        height: 25px;
+        background: #444;
+        border: 2px solid white;
+    }
+
+    .bar {
+        height: 100%;
+        width: 100%;
+        background: limegreen;
+        transition: 0.2s;
+    }
+
+    #message {
+        font-size: 24px;
+        font-weight: bold;
+        min-height: 35px;
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 18px;
+        margin: 5px;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+    }
+
+    #attack {
+        background: #ff9800;
+        color: white;
+    }
+
+    #kick {
+        background: #e91e63;
+        color: white;
+    }
+
+    #restart {
+        background: #4caf50;
+        color: white;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>🥊 STREET FIGHT 🥊</h1>
+
+<div id="ui">
+    <div class="health-box">
+        <p>NGƯỜI CHƠI ❤️</p>
+        <div class="health">
+            <div class="bar" id="playerHealth"></div>
+        </div>
+    </div>
+
+    <div class="health-box">
+        <p>ĐỐI THỦ 🤖</p>
+        <div class="health">
+            <div class="bar" id="enemyHealth"></div>
+        </div>
+    </div>
+</div>
+
+<div id="message"></div>
+
+<div id="game">
+    <div class="fighter" id="player">
+        <div class="head"></div>
+        <div class="body"></div>
+    </div>
+
+    <div class="fighter" id="enemy">
+        <div class="head"></div>
+        <div class="body"></div>
+    </div>
+</div>
+
+<div>
+    <button id="attack">👊 ĐẤM</button>
+    <button id="kick">🦵 ĐÁ</button>
+    <button id="restart">🔄 CHƠI LẠI</button>
+</div>
+
+<script>
+let playerHP = 100;
+let enemyHP = 100;
+let gameOver = false;
+
+const player = document.getElementById("player");
+const enemy = document.getElementById("enemy");
+const playerHealth = document.getElementById("playerHealth");
+const enemyHealth = document.getElementById("enemyHealth");
+const message = document.getElementById("message");
+
+function updateHealth() {
+    playerHealth.style.width = playerHP + "%";
+    enemyHealth.style.width = enemyHP + "%";
+}
+
+function checkGameOver() {
+    if (enemyHP <= 0) {
+        enemyHP = 0;
+        updateHealth();
+        message.textContent = "🏆 BẠN ĐÃ CHIẾN THẮNG!";
+        gameOver = true;
+        return true;
+    }
+
+    if (playerHP <= 0) {
+        playerHP = 0;
+        updateHealth();
+        message.textContent = "💀 BẠN ĐÃ THUA!";
+        gameOver = true;
+        return true;
+    }
+
+    return false;
+}
+
+function playerAttack(damage, type) {
+    if (gameOver) return;
+
+    enemyHP -= damage;
+    message.textContent = type + " Bạn gây " + damage + " sát thương!";
+
+    player.style.transform = "translateX(50px)";
+
+    setTimeout(() => {
+        player.style.transform = "translateX(0)";
+    }, 150);
+
+    updateHealth();
+
+    if (!checkGameOver()) {
+        setTimeout(enemyAttack, 600);
+    }
+}
+
+function enemyAttack() {
+    if (gameOver) return;
+
+    const damage = Math.floor(Math.random() * 12) + 5;
+    playerHP -= damage;
+
+    message.textContent = "🤖 Đối thủ phản công! Bạn mất " + damage + " máu!";
+
+    enemy.style.transform = "translateX(-50px)";
+
+    setTimeout(() => {
+        enemy.style.transform = "translateX(0)";
+    }, 150);
+
+    updateHealth();
+    checkGameOver();
+}
+
+document.getElementById("attack").onclick = function() {
+    const damage = Math.floor(Math.random() * 10) + 8;
+    playerAttack(damage, "👊");
+};
+
+document.getElementById("kick").onclick = function() {
+    const damage = Math.floor(Math.random() * 15) + 10;
+    playerAttack(damage, "🦵");
+};
+
+document.getElementById("restart").onclick = function() {
+    playerHP = 100;
+    enemyHP = 100;
+    gameOver = false;
+    message.textContent = "🔥 TRẬN ĐẤU BẮT ĐẦU!";
+    updateHealth();
+};
+
+message.textContent = "🔥 TRẬN ĐẤU BẮT ĐẦU!";
+</script>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nông Trại Vui Vẻ</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #bfe8ff;
+}
+
+h1 {
+    color: #2e7d32;
+}
+
+#info {
+    font-size: 20px;
+    margin: 15px;
+}
+
+#farm {
+    width: 600px;
+    max-width: 95%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 20px;
+    background: #4caf50;
+    border-radius: 20px;
+}
+
+.plot {
+    height: 120px;
+    background: #8b5a2b;
+    border: 4px solid #6d421c;
+    border-radius: 15px;
+    font-size: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.plot:hover {
+    transform: scale(1.03);
+}
+
+button {
+    padding: 12px 20px;
+    margin: 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#plantBtn {
+    background: #4caf50;
+    color: white;
+}
+
+#waterBtn {
+    background: #2196f3;
+    color: white;
+}
+
+#harvestBtn {
+    background: #ff9800;
+    color: white;
+}
+
+#resetBtn {
+    background: #555;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🚜 NÔNG TRẠI VUI VẺ 🌾</h1>
+
+<div id="info">
+    🪙 Tiền: <span id="money">50</span> |
+    🌱 Hạt giống: <span id="seeds">5</span>
+</div>
+
+<p>Chọn một hành động, sau đó bấm vào ô đất!</p>
+
+<div>
+    <button id="plantBtn">🌱 Trồng cây</button>
+    <button id="waterBtn">💧 Tưới nước</button>
+    <button id="harvestBtn">🥕 Thu hoạch</button>
+    <button id="resetBtn">🔄 Chơi lại</button>
+</div>
+
+<div id="farm"></div>
+
+<h2 id="message">Chào mừng đến với nông trại! 🚜</h2>
+
+<script>
+const farm = document.getElementById("farm");
+const moneyText = document.getElementById("money");
+const seedsText = document.getElementById("seeds");
+const message = document.getElementById("message");
+
+let money = 50;
+let seeds = 5;
+let action = "plant";
+
+const plots = Array(9).fill().map(() => ({
+    stage: 0
+}));
+
+// stage 0 = đất
+// stage 1 = hạt giống
+// stage 2 = cây đang lớn
+// stage 3 = có thể thu hoạch
+
+function createFarm() {
+    farm.innerHTML = "";
+
+    plots.forEach((plot, index) => {
+        const div = document.createElement("div");
+        div.className = "plot";
+
+        if (plot.stage === 0) div.textContent = "🟫";
+        if (plot.stage === 1) div.textContent = "🌱";
+        if (plot.stage === 2) div.textContent = "🌿";
+        if (plot.stage === 3) div.textContent = "🥕";
+
+        div.onclick = () => handlePlot(index);
+
+        farm.appendChild(div);
+    });
+
+    updateInfo();
+}
+
+function handlePlot(index) {
+    const plot = plots[index];
+
+    if (action === "plant") {
+        if (plot.stage === 0 && seeds > 0) {
+            plot.stage = 1;
+            seeds--;
+            message.textContent = "🌱 Bạn đã trồng một hạt giống!";
+        } else {
+            message.textContent = "⚠️ Không thể trồng ở đây!";
+        }
+    }
+
+    if (action === "water") {
+        if (plot.stage === 1) {
+            plot.stage = 2;
+            message.textContent = "💧 Cây đang phát triển!";
+        } else if (plot.stage === 2) {
+            plot.stage = 3;
+            message.textContent = "🥕 Cây đã trưởng thành và có thể thu hoạch!";
+        } else {
+            message.textContent = "⚠️ Ô này không cần tưới!";
+        }
+    }
+
+    if (action === "harvest") {
+        if (plot.stage === 3) {
+            plot.stage = 0;
+            money += 20;
+            message.textContent = "🎉 Thu hoạch thành công! Bạn nhận được 20 tiền!";
+        } else {
+            message.textContent = "⚠️ Cây chưa sẵn sàng để thu hoạch!";
+        }
+    }
+
+    createFarm();
+}
+
+function updateInfo() {
+    moneyText.textContent = money;
+    seedsText.textContent = seeds;
+}
+
+document.getElementById("plantBtn").onclick = () => {
+    action = "plant";
+    message.textContent = "🌱 Chế độ trồng cây!";
+};
+
+document.getElementById("waterBtn").onclick = () => {
+    action = "water";
+    message.textContent = "💧 Chế độ tưới nước!";
+};
+
+document.getElementById("harvestBtn").onclick = () => {
+    action = "harvest";
+    message.textContent = "🥕 Chế độ thu hoạch!";
+};
+
+document.getElementById("resetBtn").onclick = () => {
+    money = 50;
+    seeds = 5;
+    action = "plant";
+
+    plots.forEach(plot => plot.stage = 0);
+
+    message.textContent = "🚜 Bạn đã bắt đầu một nông trại mới!";
+    createFarm();
+};
+
+createFarm();
+</script>
+
+</body>
+</html>

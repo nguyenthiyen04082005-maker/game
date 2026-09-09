@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trò Chơi Nấu Ăn</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #fff3d6, #ffd6a5);
+}
+
+h1 {
+    color: #d35400;
+}
+
+#game {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+#kitchen {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    min-height: 350px;
+    box-shadow: 0 5px 20px #999;
+}
+
+#ingredients {
+    font-size: 60px;
+    min-height: 100px;
+}
+
+button {
+    padding: 12px 18px;
+    margin: 5px;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    cursor: pointer;
+    background: #f39c12;
+    color: white;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+#score {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#message {
+    min-height: 40px;
+    font-size: 20px;
+    color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<h1>👩‍🍳 TRÒ CHƠI NẤU ĂN 🍳</h1>
+
+<div id="game">
+
+    <div id="score">
+        ⭐ Điểm: <span id="points">0</span>
+    </div>
+
+    <div id="kitchen">
+        <h2 id="dish">🍲 Hãy nấu món súp!</h2>
+
+        <div id="ingredients">🥕 🥔 🧅</div>
+
+        <h3 id="message">Chọn nguyên liệu để bắt đầu!</h3>
+
+        <div id="buttons">
+            <button onclick="addIngredient('🥕')">🥕 Cà rốt</button>
+            <button onclick="addIngredient('🥔')">🥔 Khoai tây</button>
+            <button onclick="addIngredient('🧅')">🧅 Hành</button>
+            <br>
+            <button onclick="cook()">🔥 Nấu ăn</button>
+            <button onclick="restart()">🔄 Chơi lại</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+let selected = [];
+let points = 0;
+
+const required = ["🥕", "🥔", "🧅"];
+
+function addIngredient(food) {
+    if (selected.length >= 3) {
+        document.getElementById("message").textContent =
+            "⚠️ Bạn đã chọn đủ nguyên liệu rồi!";
+        return;
+    }
+
+    selected.push(food);
+
+    document.getElementById("ingredients").textContent =
+        selected.join(" ");
+
+    document.getElementById("message").textContent =
+        "🥣 Bạn đã thêm " + food + " vào nồi!";
+}
+
+function cook() {
+    if (selected.length < 3) {
+        document.getElementById("message").textContent =
+            "⚠️ Bạn cần thêm đủ nguyên liệu!";
+        return;
+    }
+
+    let correct = true;
+
+    for (let item of required) {
+        if (!selected.includes(item)) {
+            correct = false;
+        }
+    }
+
+    if (correct) {
+        points += 10;
+
+        document.getElementById("points").textContent = points;
+        document.getElementById("dish").textContent =
+            "🍲 MÓN SÚP HOÀN THÀNH!";
+
+        document.getElementById("ingredients").textContent = "🍲✨";
+
+        document.getElementById("message").textContent =
+            "🎉 Tuyệt vời! Bạn nhận được 10 điểm!";
+    }
+}
+
+function restart() {
+    selected = [];
+
+    document.getElementById("dish").textContent =
+        "🍲 Hãy nấu món súp!";
+
+    document.getElementById("ingredients").textContent =
+        "🥕 🥔 🧅";
+
+    document.getElementById("message").textContent =
+        "👩‍🍳 Chọn nguyên liệu để bắt đầu!";
+}
+</script>
+
+</body>
+</html>

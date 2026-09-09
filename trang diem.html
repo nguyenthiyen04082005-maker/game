@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trò Chơi Trang Điểm</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffd6e7, #e6d5ff);
+    text-align: center;
+}
+
+h1 { color: #d63384; }
+
+.game {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+/* Nhân vật */
+.character {
+    position: relative;
+    width: 300px;
+    height: 420px;
+    background: #fff;
+    border-radius: 50% 50% 20px 20px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px #999;
+}
+
+.hair {
+    position: absolute;
+    width: 240px;
+    height: 160px;
+    background: #5b3420;
+    border-radius: 50% 50% 20% 20%;
+    left: 30px;
+    top: 20px;
+}
+
+.face {
+    position: absolute;
+    width: 180px;
+    height: 220px;
+    background: #f3c6a5;
+    border-radius: 50%;
+    left: 60px;
+    top: 80px;
+}
+
+.eye {
+    position: absolute;
+    width: 35px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    top: 80px;
+}
+
+.eye.left { left: 35px; }
+.eye.right { right: 35px; }
+
+.pupil {
+    width: 12px;
+    height: 12px;
+    background: #222;
+    border-radius: 50%;
+    margin: 4px auto;
+}
+
+.eyeshadow {
+    position: absolute;
+    width: 45px;
+    height: 12px;
+    border-radius: 50%;
+    top: 65px;
+    background: transparent;
+}
+
+.shadow-left { left: 28px; }
+.shadow-right { right: 28px; }
+
+.blush {
+    position: absolute;
+    width: 35px;
+    height: 18px;
+    border-radius: 50%;
+    background: transparent;
+    top: 130px;
+}
+
+.blush-left { left: 15px; }
+.blush-right { right: 15px; }
+
+.lips {
+    position: absolute;
+    width: 45px;
+    height: 20px;
+    background: #d6336c;
+    border-radius: 50% 50% 60% 60%;
+    bottom: 35px;
+    left: 68px;
+}
+
+/* Bảng điều khiển */
+.controls {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    min-width: 280px;
+    box-shadow: 0 5px 20px #999;
+}
+
+button {
+    margin: 5px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+}
+
+.red { background: #e63946; }
+.pink { background: #ff69b4; }
+.purple { background: #8e44ad; }
+.blue { background: #3498db; }
+.orange { background: #f39c12; }
+.reset { background: #555; }
+</style>
+</head>
+
+<body>
+
+<h1>💄 TRÒ CHƠI TRANG ĐIỂM 💄</h1>
+
+<div class="game">
+
+<div class="character">
+    <div class="hair"></div>
+
+    <div class="face">
+        <div class="eyeshadow shadow-left" id="eyeLeft"></div>
+        <div class="eyeshadow shadow-right" id="eyeRight"></div>
+
+        <div class="eye left"><div class="pupil"></div></div>
+        <div class="eye right"><div class="pupil"></div></div>
+
+        <div class="blush blush-left" id="blushLeft"></div>
+        <div class="blush blush-right" id="blushRight"></div>
+
+        <div class="lips" id="lips"></div>
+    </div>
+</div>
+
+<div class="controls">
+    <h2>💋 Chọn trang điểm</h2>
+
+    <h3>Son môi</h3>
+    <button class="red" onclick="lip('#e63946')">Đỏ</button>
+    <button class="pink" onclick="lip('#ff69b4')">Hồng</button>
+    <button class="purple" onclick="lip('#8e44ad')">Tím</button>
+
+    <h3>👁️ Phấn mắt</h3>
+    <button class="purple" onclick="eye('#9b59b6')">Tím</button>
+    <button class="blue" onclick="eye('#3498db')">Xanh</button>
+    <button class="orange" onclick="eye('#f39c12')">Cam</button>
+
+    <h3>😊 Má hồng</h3>
+    <button class="pink" onclick="blush('#ff69b4')">Hồng</button>
+    <button class="orange" onclick="blush('#ff9966')">Cam</button>
+
+    <br><br>
+
+    <button class="reset" onclick="resetGame()">🔄 Làm lại</button>
+</div>
+
+</div>
+
+<script>
+function lip(color) {
+    document.getElementById("lips").style.background = color;
+}
+
+function eye(color) {
+    document.getElementById("eyeLeft").style.background = color;
+    document.getElementById("eyeRight").style.background = color;
+}
+
+function blush(color) {
+    document.getElementById("blushLeft").style.background = color;
+    document.getElementById("blushRight").style.background = color;
+}
+
+function resetGame() {
+    document.getElementById("lips").style.background = "#d6336c";
+    document.getElementById("eyeLeft").style.background = "transparent";
+    document.getElementById("eyeRight").style.background = "transparent";
+    document.getElementById("blushLeft").style.background = "transparent";
+    document.getElementById("blushRight").style.background = "transparent";
+}
+</script>
+
+</body>
+</html>
