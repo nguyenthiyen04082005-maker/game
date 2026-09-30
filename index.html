@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 미니게임 천국</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --primary-color: #4a90e2;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px 20px;
+            color: var(--text-color);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef2f7;
+        }
+
+        /* 게임별 고유 썸네일 배경색 */
+        .card-ban-bong .thumbnail { background: #ffeaa7; }
+        .card-danh-nhau .thumbnail { background: #ff7675; }
+        .card-nau-an .thumbnail { background: #55efc4; }
+        .card-nong-trai .thumbnail { background: #ffeaa7; }
+        .card-trang-diem .thumbnail { background: #fd79a8; }
+        .card-ran-san-moi .thumbnail { background: #81ecec; }
+
+        .thumbnail svg {
+            width: 80px;
+            height: 80px;
+            fill: #2d3436;
+        }
+
+        .game-info {
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .game-info h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
+            color: #2d3436;
+        }
+
+        .game-info p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎮 나의 미니게임 천국 🎮</h1>
+        <p>원하는 게임을 선택해서 즐겨보세요!</p>
+    </header>
+
+    <main class="game-grid">
+
+        <!-- 1. 공 쏘기 게임 -->
+        <a href="ban bong.html" class="game-card card-ban-bong">
+            <div class="thumbnail">
+                <!-- 버블 아이콘 -->
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            </div>
+            <div class="game-info">
+                <h2>버블 슈터 (Bắn bóng)</h2>
+                <p>알록달록 공을 쏘아 맞추는 짜릿한 액션!</p>
+            </div>
+        </a>
+
+        <!-- 2. 격투 게임 -->
+        <a href="danh nhau.html" class="game-card card-danh-nhau">
+            <div class="thumbnail">
+                <!-- 격투/주먹 아이콘 -->
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            </div>
+            <div class="game-info">
+                <h2>전설의 격투왕 (Đánh nhau)</h2>
+                <p>긴장감 넘치는 1대1 오프라인 격투 액션 게임</p>
+            </div>
+        </a>
+
+        <!-- 3. 요리 게임 -->
+        <a href="nau an.html" class="game-card card-nau-an">
+            <div class="thumbnail">
+                <!-- 요리/모자 아이콘 -->
+                <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.17 19.53 10.53 20 12 20s2.83-.47 4.34-1.1l1.9 1.9c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41l-1.62-1.62C19.26 16.07 20 14.12 20 12c0-4.97-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
+            </div>
+            <div class="game-info">
+                <h2>행복한 셰프 (Nấu ăn)</h2>
+                <p>맛있는 요리를 만들어 손님들을 사로잡으세요!</p>
+            </div>
+        </a>
+
+        <!-- 4. 농장 게임 -->
+        <a href="nong trai.html" class="game-card card-nong-trai">
+            <div class="thumbnail">
+                <!-- 새싹 아이콘 -->
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            </div>
+            <div class="game-info">
+                <h2>타이쿤 농장 (Nông trại)</h2>
+                <p>작물을 키우고 동물을 돌보는 힐링 농장 경영</p>
+            </div>
+        </a>
+
+        <!-- 5. 화장하기 게임 -->
+        <a href="trang diem.html" class="game-card card-trang-diem">
+            <div class="thumbnail">
+                <!-- 뷰티/별 아이콘 -->
+                <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            </div>
+            <div class="game-info">
+                <h2>프린세스 메이크업 (Trang điểm)</h2>
+                <p>나만의 스타일로 아름답게 변신시키는 화장 게임</p>
+            </div>
+        </a>
+
+        <!-- 6. 뱀사냥 게임 -->
+        <a href="tro choi ran san moi.html" class="game-card card-ran-san-moi">
+            <div class="thumbnail">
+                <!-- 스네이크/파도 아이콘 -->
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            </div>
+            <div class="game-info">
+                <h2>클래식 스네이크 (Trò chơi rắn săn mồi)</h2>
+                <p>벽에 부딪히지 않고 먹이를 먹어 몸을 키우세요!</p>
+            </div>
+        </a>
+
+    </main>
+
+</body>
+</html>
